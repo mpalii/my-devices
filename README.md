@@ -1,6 +1,6 @@
-Welcome to the 'devices' repository! 🚀
+Welcome to the repository with my embedded projects! 🚀
 
-This repository serves as a collection of various embedded systems projects developed by [Your Name/Organization]. Whether you're a hobbyist, student, or professional embedded developer, you'll find a diverse range of projects here, spanning across different microcontrollers, development boards, and applications.
+This repository serves as a collection of various embedded systems projects. Whether you're a hobbyist, student, or professional embedded developer, you'll find a diverse range of projects here, spanning across different microcontrollers, development boards, and applications.
 
 Each project within this repository is meticulously crafted to showcase innovative ideas, practical implementations, and efficient utilization of embedded hardware and software. From IoT devices to robotics, sensor applications to automation systems, this repository covers a broad spectrum of embedded technologies.
 
