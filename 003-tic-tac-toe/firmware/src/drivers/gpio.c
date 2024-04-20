@@ -1,0 +1,29 @@
+/**
+ * @author Maksym Palii
+ * @brief GPIO driver for ATmega328P
+ * @version 1.0
+*/
+
+#include "gpio.h"
+
+void gpio_init(void)
+{
+    // BUTTON MATRIX
+    GPIO_SET_OUTPUT(COLUMN1);
+    GPIO_SET_OUTPUT(COLUMN2);
+    GPIO_SET_OUTPUT(COLUMN3);
+    GPIO_SET_INPUT(ROW1);
+    GPIO_SET_INPUT(ROW2);
+    GPIO_SET_INPUT(ROW3);
+
+    // LEDs
+    GPIO_SET_OUTPUT(LED_SOURCE_1);
+    GPIO_SET_OUTPUT(LED_SOURCE_2);
+    GPIO_SET_OUTPUT(LED_SOURCE_3);
+    GPIO_SET_OUTPUT(LED_DRAIN_1_X);
+    GPIO_SET_OUTPUT(LED_DRAIN_1_O);
+    GPIO_SET_OUTPUT(LED_DRAIN_2_X);
+    GPIO_SET_OUTPUT(LED_DRAIN_2_O);
+    GPIO_SET_OUTPUT(LED_DRAIN_3_X);
+    GPIO_SET_OUTPUT(LED_DRAIN_3_O);
+}
