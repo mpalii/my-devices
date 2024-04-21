@@ -68,8 +68,8 @@ void gpio_init(void);
 #define _GPIO_UNUSED_19         _PD3
 #define _GPIO_UNUSED_20         _PD4
 #define _GPIO_UNUSED_21         _PD5
-#define _GPIO_UNUSED_22         _PD6
-#define _GPIO_UNUSED_23         _PD7
+#define MODE_SELECT_1           _PD6
+#define MODE_SELECT_2           _PD7
 
 /*
  * Addresses of DDRx, PORTx and PINx registers have the same offset and equals to 3.

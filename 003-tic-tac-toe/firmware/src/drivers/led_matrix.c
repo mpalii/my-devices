@@ -126,3 +126,66 @@ struct matrix_element *led_matrix[ROW_SIZE][COLUMN_SIZE] =
         }
     }    
  }
+
+ bool line_is_present(void)
+ {
+    sign sign1, sign2, sign3;
+
+    // Check row 1
+    sign1 = led_matrix[0][0]->sign;
+    sign2 = led_matrix[0][1]->sign;
+    sign3 = led_matrix[0][2]->sign;
+    if ((sign1 != EMPTY) && (sign1 == sign2) && (sign1 == sign3))
+    return true;
+
+    // Check row 2
+    sign1 = led_matrix[1][0] -> sign;
+    sign2 = led_matrix[1][1] -> sign;
+    sign3 = led_matrix[1][2] -> sign;
+    if ((sign1 != EMPTY) && (sign1 == sign2) && (sign1 == sign3))
+    return true;
+
+    // Check row 3
+    sign1 = led_matrix[2][0] -> sign;
+    sign2 = led_matrix[2][1] -> sign;
+    sign3 = led_matrix[2][2] -> sign;
+    if ((sign1 != EMPTY) && (sign1 == sign2) && (sign1 == sign3))
+    return true;
+
+    // Check column 1
+    sign1 = led_matrix[0][0] -> sign;
+    sign2 = led_matrix[1][0] -> sign;
+    sign3 = led_matrix[2][0] -> sign;
+    if ((sign1 != EMPTY) && (sign1 == sign2) && (sign1 == sign3))
+    return true;
+
+    // Check column 2
+    sign1 = led_matrix[0][1] -> sign;
+    sign2 = led_matrix[1][1] -> sign;
+    sign3 = led_matrix[2][1] -> sign;
+    if ((sign1 != EMPTY) && (sign1 == sign2) && (sign1 == sign3))
+    return true;
+
+    // Check column 3
+    sign1 = led_matrix[0][2] -> sign;
+    sign2 = led_matrix[1][2] -> sign;
+    sign3 = led_matrix[2][2] -> sign;
+    if ((sign1 != EMPTY) && (sign1 == sign2) && (sign1 == sign3))
+    return true;
+
+    // Check diagonal 1
+    sign1 = led_matrix[0][0] -> sign;
+    sign2 = led_matrix[1][1] -> sign;
+    sign3 = led_matrix[2][2] -> sign;
+    if ((sign1 != EMPTY) && (sign1 == sign2) && (sign1 == sign3))
+    return true;
+
+    // Check diagonal 2
+    sign1 = led_matrix[0][2] -> sign;
+    sign2 = led_matrix[1][1] -> sign;
+    sign3 = led_matrix[2][0] -> sign;
+    if ((sign1 != EMPTY) && (sign1 == sign2) && (sign1 == sign3))
+    return true;
+
+    return false;
+ }

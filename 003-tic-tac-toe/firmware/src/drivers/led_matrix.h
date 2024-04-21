@@ -1,6 +1,7 @@
 #ifndef LED_MATRIX_H_
 #define LED_MATRIX_H_
 
+#include <stdbool.h>
 #include "gpio.h"
 
 typedef enum 
@@ -29,5 +30,6 @@ extern struct matrix_element element8;
 extern struct matrix_element element9;
 
 void render(void);
+bool line_is_present(void);
 
 #endif /* LED_MATRIX_H_ */

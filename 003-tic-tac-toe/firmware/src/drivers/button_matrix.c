@@ -9,7 +9,6 @@
 
 #include <stdbool.h>
 #include "button_matrix.h"
-#include "led_matrix.h"
 #include "gpio.h"
 
 bool button_1_was_pressed = false;
@@ -39,7 +38,7 @@ sign *sign_matrix[ROW_SIZE][COLUMN_SIZE] =
     { &element7.sign, &element8.sign, &element9.sign }
 };
 
-void handle_input(void)
+void handle_input_in_evaluation_mode(void)
 {
     for (uint8_t i = 0; i < COLUMN_SIZE; i++)
     {
@@ -75,4 +74,85 @@ void handle_input(void)
 
         GPIO_LOW(columns[i]);
     }
+}
+
+void handle_input(sign *user_sign)
+{
+    for (uint8_t i = 0; i < COLUMN_SIZE; i++)
+    {
+        GPIO_HIGH(columns[i]);
+
+        for (uint8_t j = 0; j < ROW_SIZE; j++)
+        {
+            bool row_high = GPIO_GET_INPUT(rows[j]);
+            bool *button_flag = button_flags[i][j];
+
+            // check whether button was pressed
+            if (row_high && !*button_flag)
+            {
+                *button_flag= true;
+                
+                sign *current_sign = sign_matrix[j][i];
+                if (*current_sign == EMPTY)
+                {
+                    *current_sign = *user_sign;
+                    *user_sign = (*user_sign == CROSS) ? NOUGHT : CROSS;
+                }
+            }
+
+            // check whether button was released
+            if (!row_high && *button_flag)
+            {
+                *button_flag = false;
+            }
+        }
+
+        GPIO_LOW(columns[i]);
+    }
+}
+
+bool handle_pvm_input(sign *user_sign)
+{
+    bool input_occured = false;
+
+    for (uint8_t i = 0; i < COLUMN_SIZE; i++)
+    {
+        if (input_occured)
+        {
+            continue;
+        }
+        
+        GPIO_HIGH(columns[i]);
+
+        for (uint8_t j = 0; j < ROW_SIZE; j++)
+        {
+            bool row_high = GPIO_GET_INPUT(rows[j]);
+            bool *button_flag = button_flags[i][j];
+
+            // check whether button was pressed
+            if (row_high && !*button_flag && !input_occured)
+            {
+                *button_flag= true;
+                
+                sign *current_sign = sign_matrix[j][i];
+                if (*current_sign == EMPTY)
+                {
+                    *current_sign = *user_sign;
+                    input_occured = true;
+                    GPIO_LOW(columns[i]);
+                    continue;
+                }
+            }
+
+            // check whether button was released
+            if (!row_high && *button_flag)
+            {
+                *button_flag = false;
+            }
+        }
+
+        GPIO_LOW(columns[i]);
+    }
+
+    return input_occured;
 }

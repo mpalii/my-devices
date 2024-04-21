@@ -9,48 +9,85 @@
 
 #include <avr/interrupt.h>
 #include <stdbool.h>
+#include <util/delay.h>
 #include "drivers/gpio.h"
 #include "drivers/led_matrix.h"
 #include "drivers/button_matrix.h"
 
-void init_tasks(void);
+void init_mode(void);
 void init_timer_0(void);
 
-// Task 1
-#define T1 1
-void task_1(void);
-volatile uint8_t time1;
-
-// Task 2
-#define T2 20
-void task_2(void);
-volatile uint8_t time2;
+volatile uint32_t mcu_operating_time = 0;
 
 ISR (TIMER0_COMPA_vect)
 {    
-    // Adjust task's timers
-    if (time1 > 0) --time1;
-    if (time2 > 0) --time2;
+    mcu_operating_time++;
+    render();
 }
+
+uint8_t game_mode = 0;
+sign user_sign = CROSS;
+bool input_enabled = true;
+bool user_turn = true;
 
 int main(void)
 {
     gpio_init();
-    init_tasks();
+    init_mode();
     init_timer_0();
     sei();
-	
-    while (true)
+
+    if (game_mode == 1) 
     {
-        if (time1 == 0) task_1();
-        if (time2 == 0) task_2();
+        while (true)
+        {
+            handle_input_in_evaluation_mode();
+            _delay_ms(20);
+        }
     }
+
+    if (game_mode == 2)
+    {
+        while (true)
+        {
+            if (input_enabled)
+            { 
+                handle_input(&user_sign);
+                _delay_ms(20);
+
+                if (line_is_present())
+                {
+                    input_enabled = false;
+                }
+            }
+        }
+        
+    }
+	
+    // add pin error signal
+
+    // while (true)
+    // {
+    //     // NOP
+    // }
 }
 
-void init_tasks(void)
+void init_mode(void)
 {
-    time1 = T1;
-    time2 = T2;
+    if (GPIO_GET_INPUT(MODE_SELECT_1) && GPIO_GET_INPUT(MODE_SELECT_2))
+    {
+        game_mode = 1;  // evaluation mode
+    }
+
+    if (!GPIO_GET_INPUT(MODE_SELECT_1))
+    {
+        game_mode = 2; // PVP mode
+    }
+
+    if (!GPIO_GET_INPUT(MODE_SELECT_2))
+    {
+        game_mode = 3; // PVM mode
+    }
 }
 
 /****************************************************************************/
@@ -70,26 +107,4 @@ void init_timer_0(void)
 	
     // TIMSK0 – Timer/Counter0 Interrupt Mask Register
     TIMSK0 = _BV(OCIE0A);            // Timer/Counter0 Output Compare Match channel A Interrupt Enable
-}
-
-/****************************************************************************/
-/* Tasks implementation section                                             */
-/****************************************************************************/
-
-void task_1(void)
-{
-    // re-initialize task 1 timer
-    time1 = T1;
-
-    // Render let matrix element
-    render();
-}
-
-void task_2(void)
-{
-    // re-initialize task 2 timer
-    time2 = T2;
-
-    // Handle user input
-    handle_input();
 }
