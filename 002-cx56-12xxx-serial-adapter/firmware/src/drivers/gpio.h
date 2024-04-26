@@ -10,7 +10,7 @@
 #include <avr/io.h>
 
 // GPIO initialization function prototype
-void gpio_init(void);
+void init_gpio(void);
 
 /*
  * Generic pin map table

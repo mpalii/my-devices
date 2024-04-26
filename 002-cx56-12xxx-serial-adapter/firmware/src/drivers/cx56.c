@@ -1,7 +1,7 @@
 /**
  * @author Maksym Palii
  * @brief Seven-segment display
- * @version 1.0
+ * @version 2.0
 */
 
 #include "cx56.h"
@@ -14,62 +14,71 @@
 #error "Radix is not specified!"
 #endif
 
-#define DIGIT_1 0
-#define DIGIT_2 1
-#define DIGIT_3 2
-#define DIGIT_4 3
+#define DECIMAL_POINT_BIT (7)
+#define DIGITS_NUMBER (4)
+#define EMPTY_MASK (0)
 
-// Digits placed from lower to higher
-const uint8_t DIGIT_MASKS[] = 
-{   
-    ~_BV(DIGIT_1), 
-    ~_BV(DIGIT_2), 
-    ~_BV(DIGIT_3), 
-    ~_BV(DIGIT_4)
-};
-
-const uint8_t NUMBERS[] = {
+const uint8_t DIGIT_TO_MASK_TABLE[] = {
     0b00111111, 0b00000110, 0b01011011, 0b01001111,	// 0, 1, 2, 3
     0b01100110, 0b01101101, 0b01111101, 0b00000111,	// 4, 5, 6, 7
     0b01111111, 0b01101111, 0b01110111, 0b01111100,	// 8, 9, A, B
     0b00111001, 0b01011110, 0b01111001, 0b01110001	// C, D, E, F
 };
 
+uint8_t buffer[DIGITS_NUMBER] = { };
+
 uint8_t current_digit = 0;
 
-void render(uint16_t number) 
+void cx56_split(uint16_t number)
+{
+    for (uint8_t i = 0; i < DIGITS_NUMBER; i++)
+    {
+        uint8_t extracted_digit = number % RADIX;
+        number /= RADIX;
+
+    #ifdef NO_LEADING_ZEROS_MODE
+        #ifdef DP_DIGIT
+            #if ((DP_DIGIT >= DIGITS_NUMBER) || (DP_DIGIT < 0))
+            #error "Illegal decimal point digit was specified!"
+            #endif
+            
+            if ((i > DP_DIGIT) && (number == 0) && (extracted_digit == 0))
+            {
+                buffer[i] = EMPTY_MASK;
+                continue;
+            }
+        #else
+            if ((i > 0) && (number == 0) && (extracted_digit == 0))
+            {
+                buffer[i] = EMPTY_MASK;
+                continue;
+            }
+        #endif
+    #endif
+
+        buffer[i] = DIGIT_TO_MASK_TABLE[extracted_digit];
+
+    #ifdef DP_DIGIT
+    // Adjust digit with dp segment if needed
+    if (i == DP_DIGIT) 
+    {
+        buffer[i] |= _BV(DECIMAL_POINT_BIT);
+    }
+    #endif
+
+    }
+}
+
+void cx56_render(void) 
 {
 
-    if (current_digit >= sizeof(DIGIT_MASKS)) 
+    if (current_digit >= DIGITS_NUMBER) 
     {
         current_digit = 0;
     }
 
-    for (int i = 0; i < current_digit; i++)
-    {
-        number /= RADIX;
-    }
-
-    #ifdef NO_LEADING_ZEROS_MODE
-        #ifdef DP_DIGIT
-        if (current_digit > DP_DIGIT && number == 0)
-        {
-            current_digit++;
-            return;
-        }
-        #else
-        if (current_digit > 0 && number == 0)
-        {
-            current_digit++;
-            return;
-        }
-        #endif
-    #endif
-	
-    number %= RADIX;
-
     // Shift digit related byte
-    uint8_t digit_byte = DIGIT_MASKS[current_digit];
+    uint8_t digit_byte = ~_BV(current_digit);
     for (int8_t i = 7; i >= 0; i--)
     {
         GPIO_LOW(SRCLK);
@@ -87,21 +96,13 @@ void render(uint16_t number)
     }
 
     // Shift number related byte
-    uint8_t mapped_number = NUMBERS[number];
-
-    #ifdef DP_DIGIT
-    // Adjust digit with dp segment if needed
-    if (current_digit == DP_DIGIT) 
-    {
-        mapped_number |= 1 << 7;
-    }
-    #endif
+    uint8_t number_mask = buffer[current_digit];
 
     for (int8_t i = 7; i >= 0; i--)
     {
         GPIO_LOW(SRCLK);
 
-        if (mapped_number & (1 << i))
+        if (number_mask & (_BV(i)))
         {
             _SEGMENT_ENABLE(SER);
         }
@@ -119,4 +120,9 @@ void render(uint16_t number)
     GPIO_LOW(RCLK);
 
     current_digit++;
+}
+
+void init_cx56(void)
+{
+    cx56_split(0);
 }

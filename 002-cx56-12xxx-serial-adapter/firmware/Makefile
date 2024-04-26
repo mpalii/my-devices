@@ -3,7 +3,7 @@
 DESTINATION = firmware
 DEVICE      = atmega328p
 PROGRAMMER  = usbasp-clone
-DEFINES		= $(addprefix -D, COMMON_CATHODE_MODE WITH_LEADING_ZEROS_MODE DP_DIGIT=DIGIT_2 RADIX=10)
+DEFINES		= $(addprefix -D, COMMON_CATHODE_MODE NO_LEADING_ZEROS_MODE DP_DIGIT=1 RADIX=10)
 
 # Utilities
 AVRDUDE     = avrdude -c $(PROGRAMMER) -p $(DEVICE)
@@ -16,7 +16,9 @@ AVRSIZE     = avr-size --format=AVR --mcu=$(DEVICE)
 SOURCES = \
     src/main.c \
     src/drivers/gpio.c \
-    src/drivers/cx56.c 
+    src/drivers/cx56.c \
+    src/drivers/timer0.c \
+	src/task_manager.c
 
 # Object files
 OBJECTS = $(patsubst ./src/%.c, ./target/%.o, $(SOURCES))

@@ -22,6 +22,8 @@
 # define _DIGIT_DISABLE(GPIO) GPIO_LOW(GPIO)
 #endif
 
-void render(uint16_t number);
+void init_cx56(void);
+void cx56_split(uint16_t number);
+void cx56_render(void);
 
 #endif /* CX56_H_ */
