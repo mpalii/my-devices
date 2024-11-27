@@ -18,6 +18,7 @@ AVRSIZE     = avr-size --format=AVR --mcu=$(DEVICE)
 SOURCES = 									\
     src/main.c 								\
 											\
+	src/drivers/gpio.c						\
 	src/drivers/uart.c						\
 	src/drivers/led.c						\
 	src/drivers/button.c					\

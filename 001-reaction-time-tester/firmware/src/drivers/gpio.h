@@ -1,11 +1,7 @@
 #ifndef GPIO_H_
 #define GPIO_H_
 
-/*
- * General purpose IO pins assignment and handling
- * ATmega328P has 22 general purpose IO lines
- * Two 8bit ports (B, and D), and 7bit port C
- */
+void init_gpio(void);
 
 #include <avr/io.h>
 
@@ -42,21 +38,21 @@
 /*
  * Hardware pin mapping
  */
-#define DEADLINE_IND            (_PB0)
-#define BUTTON                  (_PB1)
-#define LED                     (_PB2)
+#define CHECK                   (_PB0)
+#define LED                     (_PB1)
+#define BUTTON                  (_PB2)
 #define BUZZER                  (_PB3)
-#define SCORE_RESET             (_PB4)
+#define _GPIO_UNUSED_05         (_PB4)
 #define _GPIO_UNUSED_06         (_PB5)
 #define XTAL1                   (_PB6)
 #define XTAL2                   (_PB7)
 
-#define LCD_EN                  (_PC0)
-#define LCD_RW                  (_PC1)
-#define LCD_RS                  (_PC2)
-#define _GPIO_UNUSED_12         (_PC3)
-#define LCD_PD0                 (_PC4)
-#define LCD_PD1                 (_PC5)
+#define LCD_PD1                 (_PC0)
+#define LCD_PD0                 (_PC1)
+#define LCD_EN                  (_PC2)
+#define LCD_RS                  (_PC3)
+#define LCD_RW                  (_PC4)
+#define SCORE_RESET             (_PC5)
 #define RESET                   (_PC6)
 
 #define UART_RX                 (_PD0)
@@ -118,47 +114,3 @@
 #define _gpio_get_input(GPIO)   (*_PIN_ADDRESS(GPIO) & _GPIO_PIN_BIT(GPIO))
 
 #endif /* GPIO_H_ */
-
-
-
-/*
-
-    #define LED                     _PA0
-    #define RESET                   _PA1
-    #define _GPIO_UNUSED_03         _PA2
-    #define _GPIO_UNUSED_04         _PA3
-    #define _GPIO_UNUSED_05         _PA4
-    #define _GPIO_UNUSED_06         _PA5
-    #define _GPIO_UNUSED_07         _PA6
-    #define DEADLINE_IND            _PA7
-
-    #define _GPIO_UNUSED_09         _PB0
-    #define _GPIO_UNUSED_10         _PB1
-    #define _GPIO_UNUSED_11         _PB2
-    #define _GPIO_UNUSED_12         _PB3
-    #define _GPIO_UNUSED_13         _PB4
-    #define _GPIO_UNUSED_14         _PB5
-    #define _GPIO_UNUSED_15         _PB6
-    #define _GPIO_UNUSED_16         _PB7
-
-    #define LCD_PD0                 _PC0
-    #define LCD_PD1                 _PC1
-    #define LCD_PD2                 _PC2
-    #define LCD_PD3                 _PC3
-    #define LCD_PD4                 _PC4
-    #define LCD_PD5                 _PC5
-    #define LCD_PD6                 _PC6
-    #define LCD_PD7                 _PC7
-
-    #define RX                      _PD0
-    #define TX                      _PD1
-    #define BUTTON                  _PD2    // AKA INT0
-    #define _GPIO_UNUSED_28         _PD3
-    #define LCD_EN                  _PD4
-    #define LCD_RW                  _PD5
-    #define LCD_RS                  _PD6
-    #define BUZZER                  _PD7    // AKA OC2A
-
-
-
-*/

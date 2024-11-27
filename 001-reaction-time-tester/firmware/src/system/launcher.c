@@ -24,6 +24,7 @@ void launch_system(void)
 static inline void init_system(void)
 {
     // Init drivers
+    init_gpio();
     init_uart();
     init_led();
     init_button();
