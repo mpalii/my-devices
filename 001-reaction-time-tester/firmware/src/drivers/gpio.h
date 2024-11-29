@@ -50,8 +50,8 @@ void init_gpio(void);
 #define LCD_PD1                 (_PC0)
 #define LCD_PD0                 (_PC1)
 #define LCD_EN                  (_PC2)
-#define LCD_RS                  (_PC3)
-#define LCD_RW                  (_PC4)
+#define LCD_RW                  (_PC3)
+#define LCD_RS                  (_PC4)
 #define SCORE_RESET             (_PC5)
 #define RESET                   (_PC6)
 

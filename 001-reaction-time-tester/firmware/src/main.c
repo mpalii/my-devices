@@ -1,8 +1,8 @@
 /**
  * @author Maksym Palii
  * @brief Reaction time measurement 
- * @version 1.0
- * @date 2024 November 17
+ * @version 2.0
+ * @date 2024 November 26
  * @link https://people.ece.cornell.edu/land/courses/ece4760/labs/s2012/lab1.html
  */
 
