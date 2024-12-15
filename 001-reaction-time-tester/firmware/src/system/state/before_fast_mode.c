@@ -17,7 +17,8 @@ e_state handle_before_fast_mode_state(void)
     }
 
     srand((unsigned int) random_seed);
-    delay = 1535 + (rand() % 64000);
+    // delay = 1535 + (rand() % 64000);
+    delay = 1535 + (rand() % 9465);
     fast_track_mode = true;
     user_reaction_time = 0;
 

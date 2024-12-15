@@ -29,6 +29,10 @@ static char* output_buffer = NULL;
 /************************************************************************/
 void init_uart(void)
 {
+    // Enable internal pull-up resistor, just to avoid noises when external uart bridge is not connected
+    _gpio_set_input(UART_RX);
+    _gpio_high(UART_RX);
+
     // Set baud rate
     UBRR0 = F_CPU / (BAUD_RATE_RATIO * BAUD_RATE) - 1;
 
