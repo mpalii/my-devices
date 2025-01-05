@@ -1,6 +1,6 @@
-<circuit version="1.1.0-SR0" rev="1917" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
+<circuit version="1.1.0-SR1" rev="" stepSize="1000000" stepsPS="1000000" NLsteps="100000" reaStep="1000000" animate="0" >
 
-<item itemtype="MCU" CircId="m328 TQFP-5" mainComp="false" Show_id="true" Show_Val="false" Pos="-352,312" rotation="0" hflip="1" vflip="1" label="m328 TQFP" idLabPos="83,90" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="8 MHz" Program="../firmware/target/firmware.hex" Auto_Load="true" saveEepr="true" Rst_enabled="false" Ext_Osc="true" Wdt_enabled="false" Clk_Out="false" SerialMon="-1" />
+<item itemtype="MCU" CircId="m328 TQFP-5" mainComp="false" Show_id="true" Show_Val="false" Pos="-352,312" rotation="0" hflip="1" vflip="1" label="m328 TQFP" idLabPos="83,90" labelrot="0" valLabPos="-16,20" valLabRot="0" Frequency="8 MHz" Program="../firmware/target/firmware.hex" Auto_Load="true" saveEepr="true" Rst_enabled="false" Ext_Osc="true" Wdt_enabled="false" Clk_Out="false" MainMcu="true" SerialMon="-1" />
 
 <item itemtype="Push" CircId="Push-29" mainComp="false" Show_id="false" Show_Val="false" Pos="64,164" rotation="-90" hflip="1" vflip="1" label="Push-1" idLabPos="-12,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Norm_Close="false" Poles="1" />
 
@@ -518,24 +518,6 @@
 
 <item itemtype="Tunnel" CircId="Tunnel-613" mainComp="false" Show_id="false" Show_Val="false" Pos="-240,276" rotation="0" hflip="-1" vflip="1" label="Tunnel-613" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="ROW3" IsBus="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-617" mainComp="false" Show_id="false" Show_Val="false" Pos="-172,496" rotation="90" hflip="-1" vflip="1" label="Tunnel-617" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="ROW1" IsBus="false" />
-
-<item itemtype="Tunnel" CircId="Tunnel-786" mainComp="false" Show_id="false" Show_Val="false" Pos="-140,496" rotation="90" hflip="-1" vflip="1" label="Tunnel-786" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="ROW2" IsBus="false" />
-
-<item itemtype="Tunnel" CircId="Tunnel-787" mainComp="false" Show_id="false" Show_Val="false" Pos="-108,496" rotation="90" hflip="-1" vflip="1" label="Tunnel-787" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="ROW3" IsBus="false" />
-
-<item itemtype="Resistor" CircId="Resistor-788" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-172,528" rotation="-90" hflip="1" vflip="1" label="Resistor-788" idLabPos="-16,-24" labelrot="0" valLabPos="-10,-15" valLabRot="0" Resistance="20 kΩ" />
-
-<item itemtype="Resistor" CircId="Resistor-789" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-140,528" rotation="-90" hflip="1" vflip="1" label="Resistor-789" idLabPos="-16,-24" labelrot="0" valLabPos="-10,-15" valLabRot="0" Resistance="20 kΩ" />
-
-<item itemtype="Resistor" CircId="Resistor-790" mainComp="false" ShowProp="Resistance" Show_id="false" Show_Val="true" Pos="-108,528" rotation="-90" hflip="1" vflip="1" label="Resistor-790" idLabPos="-16,-24" labelrot="0" valLabPos="-10,-15" valLabRot="0" Resistance="20 kΩ" />
-
-<item itemtype="Ground" CircId="Ground-792" mainComp="false" Show_id="false" Show_Val="false" Pos="-172,576" rotation="0" hflip="1" vflip="1" label="Ground-792" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
-
-<item itemtype="Ground" CircId="Ground-793" mainComp="false" Show_id="false" Show_Val="false" Pos="-140,576" rotation="0" hflip="1" vflip="1" label="Ground-793" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
-
-<item itemtype="Ground" CircId="Ground-794" mainComp="false" Show_id="false" Show_Val="false" Pos="-108,576" rotation="0" hflip="1" vflip="1" label="Ground-794" idLabPos="-16,8" labelrot="0" valLabPos="-16,20" valLabRot="0" />
-
 <item itemtype="Tunnel" CircId="Tunnel-801" mainComp="false" Show_id="false" Show_Val="false" Pos="-240,268" rotation="0" hflip="-1" vflip="1" label="Tunnel-801" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="RESET" IsBus="false" />
 
 <item itemtype="Tunnel" CircId="Tunnel-803" mainComp="false" Show_id="false" Show_Val="false" Pos="-376,448" rotation="0" hflip="1" vflip="1" label="Tunnel-803" idLabPos="-16,-24" labelrot="0" valLabPos="-16,20" valLabRot="0" Name="LED_SOURCE_1" IsBus="false" />
@@ -931,18 +913,6 @@
 <item itemtype="Connector" uid="connector-1586" startpinid="Tunnel-612-pin" endpinid="m328 TQFP-5-PORTC4" pointList="-240,284,-296,284,-296,304" />
 
 <item itemtype="Connector" uid="connector-1587" startpinid="m328 TQFP-5-PORTC5" endpinid="Tunnel-613-pin" pointList="-304,304,-304,276,-240,276" />
-
-<item itemtype="Connector" uid="connector-1588" startpinid="Tunnel-617-pin" endpinid="Resistor-788-rPin" pointList="-172,496,-172,512" />
-
-<item itemtype="Connector" uid="connector-1589" startpinid="Tunnel-786-pin" endpinid="Resistor-789-rPin" pointList="-140,496,-140,512" />
-
-<item itemtype="Connector" uid="connector-1590" startpinid="Tunnel-787-pin" endpinid="Resistor-790-rPin" pointList="-108,496,-108,512" />
-
-<item itemtype="Connector" uid="connector-1591" startpinid="Resistor-790-lPin" endpinid="Ground-794-Gnd" pointList="-108,544,-108,560" />
-
-<item itemtype="Connector" uid="connector-1592" startpinid="Resistor-789-lPin" endpinid="Ground-793-Gnd" pointList="-140,544,-140,560" />
-
-<item itemtype="Connector" uid="connector-1593" startpinid="Resistor-788-lPin" endpinid="Ground-792-Gnd" pointList="-172,544,-172,560" />
 
 <item itemtype="Connector" uid="connector-1594" startpinid="Tunnel-801-pin" endpinid="m328 TQFP-5-PORTC6" pointList="-240,268,-312,268,-312,304" />
 
