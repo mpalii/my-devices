@@ -10,7 +10,7 @@
 #include <avr/io.h>
 
 // GPIO initialization function prototype
-void gpio_init(void);
+void init_gpio(void);
 
 /*
  * Generic pin map table
@@ -42,34 +42,53 @@ void gpio_init(void);
 #define _PD6    22U
 #define _PD7    23U
 
+/**
+ *          ┌────[●]────┐
+ *     PC6  │ 1      28 │  PC5
+ *     PD0  │ 2      27 │  PC4
+ *     PD1  │ 3      26 │  PC3
+ *     PD2  │ 4      25 │  PC2
+ *     PD3  │ 5      24 │  PC1
+ *     PD4  │ 6      23 │  PC0
+ *     VCC  │ 7      22 │  GND
+ *     GND  │ 8      21 │  AREF
+ *     PB6  │ 9      20 │  AVCC
+ *     PB7  │10      19 │  PB5
+ *     PD5  │11      18 │  PB4
+ *     PD6  │12      17 │  PB3
+ *     PD7  │13      16 │  PB2
+ *     PB0  │14      15 │  PB1
+ *          └───────────┘
+ */
+
 /*
  * Hardware pin mapping
  */
-#define _GPIO_UNUSED_01   _PB0
-#define _GPIO_UNUSED_02   _PB1
-#define _GPIO_UNUSED_03   _PB2
-#define _GPIO_UNUSED_04   _PB3
-#define _GPIO_UNUSED_05   _PB4
-#define _GPIO_UNUSED_06   _PB5
-#define _GPIO_UNUSED_07   _PB6
-#define _GPIO_UNUSED_08   _PB7
+#define _GPIO_UNUSED_01                 _PB0
+#define _GPIO_UNUSED_02                 _PB1
+#define _GPIO_UNUSED_03                 _PB2
+#define _GPIO_UNUSED_04                 _PB3
+#define _GPIO_UNUSED_05                 _PB4
+#define _GPIO_UNUSED_06                 _PB5
+#define XTAL1                           _PB6
+#define XTAL2                           _PB7
 
-#define _GPIO_UNUSED_09   _PC0
-#define _GPIO_UNUSED_10   _PC1
-#define _GPIO_UNUSED_11   _PC2
-#define _GPIO_UNUSED_12   _PC3
-#define _GPIO_UNUSED_13   _PC4
-#define _GPIO_UNUSED_14   _PC5
-#define RESET             _PC6
+#define _GPIO_UNUSED_09                 _PC0
+#define _GPIO_UNUSED_10                 _PC1
+#define IR_SENSOR_BOTTOM_RIGHT          _PC2
+#define IR_SENSOR_BOTTOM_LEFT           _PC3
+#define IR_SENSOR_TOP_RIGHT             _PC4
+#define IR_SENSOR_TOP_LEFT              _PC5
+#define RESET                           _PC6
 
-#define _GPIO_UNUSED_16   _PD0
-#define _GPIO_UNUSED_17   _PD1
-#define _GPIO_UNUSED_18   _PD2
-#define _GPIO_UNUSED_19   _PD3
-#define _GPIO_UNUSED_20   _PD4
-#define _GPIO_UNUSED_21   _PD5
-#define _GPIO_UNUSED_22   _PD6
-#define _GPIO_UNUSED_23   _PD7
+#define UART_RX                         _PD0
+#define UART_TX                         _PD1
+#define _GPIO_UNUSED_18                 _PD2
+#define _GPIO_UNUSED_19                 _PD3
+#define _GPIO_UNUSED_20                 _PD4
+#define _GPIO_UNUSED_21                 _PD5
+#define _GPIO_UNUSED_22                 _PD6
+#define _GPIO_UNUSED_23                 _PD7
 
 /*
  * Addresses of DDRx, PORTx and PINx registers have the same offset and equals to 3.
@@ -113,11 +132,11 @@ void gpio_init(void);
 #define _PIN_ADDRESS(GPIO) (_INIT_PIN_ADDRESS + (_GPIO_PORT(GPIO) * _SFR_OFFSET))
 
 // GPIO state manipulation macros
-#define GPIO_SET_OUTPUT(GPIO) (*_DDR_ADDRESS(GPIO) |= _GPIO_PIN_BIT(GPIO))
-#define GPIO_SET_INPUT(GPIO) (*_DDR_ADDRESS(GPIO) &= ~_GPIO_PIN_BIT(GPIO))
-#define GPIO_HIGH(GPIO) (*_PORT_ADDRESS(GPIO) |= _GPIO_PIN_BIT(GPIO))
-#define GPIO_LOW(GPIO) (*_PORT_ADDRESS(GPIO) &= ~_GPIO_PIN_BIT(GPIO))
-#define GPIO_TOGGLE(GPIO) (*_PORT_ADDRESS(GPIO) ^= _GPIO_PIN_BIT(GPIO))
-#define GPIO_GET_INPUT(GPIO) (*_PIN_ADDRESS(GPIO) & _GPIO_PIN_BIT(GPIO))
+#define _gpio_set_output(GPIO) (*_DDR_ADDRESS(GPIO) |= _GPIO_PIN_BIT(GPIO))
+#define _gpio_set_input(GPIO) (*_DDR_ADDRESS(GPIO) &= ~_GPIO_PIN_BIT(GPIO))
+#define _gpio_high(GPIO) (*_PORT_ADDRESS(GPIO) |= _GPIO_PIN_BIT(GPIO))
+#define _gpio_low(GPIO) (*_PORT_ADDRESS(GPIO) &= ~_GPIO_PIN_BIT(GPIO))
+#define _gpio_toggle(GPIO) (*_PORT_ADDRESS(GPIO) ^= _GPIO_PIN_BIT(GPIO))
+#define _gpio_get_input(GPIO) (*_PIN_ADDRESS(GPIO) & _GPIO_PIN_BIT(GPIO))
 
 #endif /* GPIO_H_ */
