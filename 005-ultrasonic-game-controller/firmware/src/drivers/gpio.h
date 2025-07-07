@@ -64,8 +64,8 @@ void init_gpio(void);
 /*
  * Hardware pin mapping
  */
-#define _GPIO_UNUSED_01                 _PB0
-#define _GPIO_UNUSED_02                 _PB1
+#define POWER_CONTROL                   _PB0
+#define POWER_BUTTON                    _PB1
 #define _GPIO_UNUSED_03                 _PB2
 #define _GPIO_UNUSED_04                 _PB3
 #define _GPIO_UNUSED_05                 _PB4

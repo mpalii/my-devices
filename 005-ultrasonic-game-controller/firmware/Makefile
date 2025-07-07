@@ -5,7 +5,7 @@ DEVICE      = atmega328p
 PARTNUMBER  = m328p
 PROGRAMMER  = usbasp
 INCLUDES    = $(addprefix -I, ./src/)
-DEFINES	    = $(addprefix -D, F_CPU=18432000UL BAUD_RATE=9600UL U2X)
+DEFINES	    = $(addprefix -D, F_CPU=8000000UL BAUD_RATE=9600UL U2X)
 
 # Utilities
 AVRDUDE     = avrdude -c $(PROGRAMMER) -p $(PARTNUMBER)

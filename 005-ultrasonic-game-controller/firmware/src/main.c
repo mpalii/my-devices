@@ -7,6 +7,7 @@
 
 #include <avr/interrupt.h>
 #include <stdbool.h>
+#include <util/delay.h>
 
 #include "drivers/gpio.h"
 #include "drivers/uart.h"
@@ -24,12 +25,26 @@ volatile uint8_t time1 = T1;
 void task2(void);
 volatile uint8_t time2 = T2;
 
+// Task 3
+#define T3 20UL
+void task_3(void);
+volatile uint16_t time3 = T3;
+
+// Task 4
+#define T4 60000UL
+void task_4(void);
+volatile uint16_t time4 = T4;
+
+bool button_was_pressed = false;
+
 //**********************************************************
 //timer 0 compare ISR
 ISR(TIMER0_COMPA_vect)
 {
     if (time1 > 0) --time1;
     if (time2 > 0) --time2;
+    if (time3 > 0) --time3;
+    if (time4 > (uint16_t) 0) --time4;
 }
 
 int main(void)
@@ -47,6 +62,8 @@ int main(void)
     {
         if (time1 == 0) task1();
         if (time2 == 0) task2();
+        if (time3 == 0) task_3();
+        if ((uint16_t) 0 == time4) task_4();
     }
     
     return 0;
@@ -68,6 +85,13 @@ void task2(void)
 {    
 	// re-initialize task 2 timer
     time2 = T2;
+
+    if (events_mask == 0)
+    {
+        return;
+    }
+
+    time4 = T4;
 
 	if (events_mask & TOP_LEFT_SENSOR_ONCOMING_EVENT_MASK)
 	{
@@ -111,4 +135,31 @@ void task2(void)
 
 	// clear events
 	events_mask = 0;
+}
+
+void task_3(void)
+{
+    // re-initialize task 4 timer
+    time3 = T3;
+
+    // check whether button was pressed
+    if (!_gpio_get_input(POWER_BUTTON) && !button_was_pressed)
+    {
+        button_was_pressed = true;
+        // button push handling
+        /* NOP */
+    }
+	
+    // check whether button was released
+    if (_gpio_get_input(POWER_BUTTON) && button_was_pressed)
+    {
+        button_was_pressed = false;
+        //button release handling
+        _gpio_low(POWER_CONTROL);
+    }
+}
+
+void task_4(void)
+{
+    _gpio_low(POWER_CONTROL);
 }
